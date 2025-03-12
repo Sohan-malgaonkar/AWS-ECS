@@ -1,0 +1,32 @@
+####____Install AWS CLI & Configure
+aws configure
+
+####____Create an ECS Cluster
+aws ecs create-cluster --cluster-name my-cluster
+
+####____Register a Task Definition (JSON File Example)
+####____Save the file as name with Demo-soh-def.json
+#structure can be like this..........
+{
+  "family": "nginx-task",
+  "containerDefinitions": [
+    {
+      "name": "nginx",
+      "image": "nginx",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true
+    }
+  ]
+}
+####____Then Run this command
+aws ecs register-task-definition --cli-input-json file://Demo-soh-def.json
+
+####____simple Run the Task using this command
+aws ecs run-task --cluster my-cluster --launch-type FARGATE --task-definition nginx-task
+
+####____how to check running Tasks!!!!
+aws ecs list-tasks --cluster my-cluster
+
+
+
